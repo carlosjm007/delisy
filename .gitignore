@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+#Carpeta estatica
+/static/
+
+#Archivo de configuracion de django
+settings.py
