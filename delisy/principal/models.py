@@ -38,8 +38,8 @@ class Url(models.Model):
 class Tienda(models.Model):
 	nombre = models.CharField(max_length=255)
 	uuid = models.CharField(max_length=50)
-	latitud = models.FloatField()
-	longitud = models.FloatField()
+	latitud = models.FloatField(default=0.0)
+	longitud = models.FloatField(default=0.0)
 	ciudad = models.ForeignKey(Ciudad, on_delete=models.CASCADE)
 	calificacion = models.DecimalField(default=Decimal('0.0'), max_digits=3, decimal_places=1)
 	disponible = models.BooleanField(default=True)

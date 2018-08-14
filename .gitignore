@@ -105,6 +105,7 @@ venv.bak/
 
 #Carpeta estatica
 delisy/static/
+*.json
 
 #Archivo de configuracion de django
 settings.py

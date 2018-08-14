@@ -53,17 +53,24 @@ class scraping_uber(object):
 					tienda_nombre = tienda_nombre.replace(" ","+")
 					tienda_nombre = tienda_nombre.replace("&","and")
 					tiendita = Tienda.objects.filter(uuid = i["uuid"])
+					latitud = 0.0
+					longitud = 0.0
+					calificacion = 0.0
+					'''
 					if str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]).find("Min") > 0:
+						
+					else:
+						latitud = 0.0
+						longitud = 0.0
+						calificacion = 0.0
+					'''
+					if len(tiendita) == 0:
 						a = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-36.88824,174.764533&radius=5000&type=restaurant&keyword='+ tienda_nombre +'&key=AIzaSyCDvjQYoCmk6_DJSF7liYmoPF9I3MClEPY')
 						for t in a.json()["results"]:
 							latitud = t['geometry']['location']["lat"]
 							longitud = t['geometry']['location']["lng"]
 							calificacion = t['rating']
-					else:
-						latitud = 0.0
-						longitud = 0.0
-						calificacion = 0.0
-					if len(tiendita) == 0:
+						print(tienda_nombre, latitud, longitud, calificacion)
 						Tienda.objects.create(
 							nombre = i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["title"]["text"],
 							uuid = i["uuid"],
@@ -77,10 +84,7 @@ class scraping_uber(object):
 						Tienda.objects.filter(uuid = i["uuid"]).update(
 							nombre = i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["title"]["text"],
 							disponible = str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]).find("Min") > 0,
-							ciudad = self.ciudad,
-							latitud = latitud,
-							longitud = longitud,
-							calificacion = calificacion
+							ciudad = self.ciudad
 							)
 					print(tienda_nombre, str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]).find("Min") > 0, str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]))
 					time.sleep(1)
@@ -90,7 +94,7 @@ class scraping_uber(object):
 			### Y aquí recorre todos los restaurantes
 
 
-#@background(schedule=30)
+@background()
 def obtener_tiendas():
 	city = Ciudad.objects.all().first()
 	prueba = scraping_uber(ciudad = city)
@@ -104,7 +108,7 @@ def obtener_tiendas():
 			"lng":str(ti.longitud),
 			"calificacion":str(ti.calificacion)
 			})
-	with open('%s/jsons/%s.json'%(settings.STATIC_ROOT,city.id), 'w') as f:
+	with open('%s/principal/static/principal/jsons/%s.json'%(settings.BASE_DIR,city.id), 'w') as f:
 		json.dump(el_json, f)
 	#########################
 	#### Aquí es donde comienza el scraping
