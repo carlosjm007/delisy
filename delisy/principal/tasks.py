@@ -108,7 +108,7 @@ def obtener_tiendas():
 			"lng":str(ti.longitud),
 			"calificacion":str(ti.calificacion)
 			})
-	with open('%s/principal/static/principal/jsons/%s.json'%(settings.BASE_DIR,city.id), 'w') as f:
+	with open('%s/static/principal/jsons/%s.json'%(settings.BASE_DIR,city.id), 'w') as f:
 		json.dump(el_json, f)
 	#########################
 	#### Aquí es donde comienza el scraping
