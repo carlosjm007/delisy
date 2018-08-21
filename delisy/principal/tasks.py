@@ -70,7 +70,7 @@ class scraping_uber(object):
 							latitud = t['geometry']['location']["lat"]
 							longitud = t['geometry']['location']["lng"]
 							calificacion = t['rating']
-						print(tienda_nombre, latitud, longitud, calificacion)
+						#print(tienda_nombre, latitud, longitud, calificacion)
 						Tienda.objects.create(
 							nombre = i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["title"]["text"],
 							uuid = i["uuid"],
@@ -86,7 +86,7 @@ class scraping_uber(object):
 							disponible = str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]).find("Min") > 0,
 							ciudad = self.ciudad
 							)
-					print(tienda_nombre, str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]).find("Min") > 0, str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]))
+					#print(tienda_nombre, str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]).find("Min") > 0, str(i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["subtitle"]["text"]))
 					time.sleep(1)
 					#p = i["payload"]["storePayload"]["stateMapDisplayInfo"]["available"]["title"]["text"]
 
