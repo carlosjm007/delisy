@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Heatmaps</title>
+    <title>doitsy</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -122,7 +122,8 @@
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 3
               },
-              map: map
+              map: map,
+              opacity: val.calificacion/5
             });
           });
         });
